@@ -9,8 +9,8 @@ import (
 var session *mgo.Session
 var database *mgo.Database
 
-// Init connects to the database
-func Init(url string, db string) {
+// InitDB connects to the database
+func InitDB(url string, db string) {
 	fmt.Println(url, db)
 
 	var err error
@@ -30,5 +30,8 @@ func Close() {
 
 // Collection return db collection
 func Collection(collection string) *mgo.Collection {
+	if database == nil {
+		panic("Database connection not configured")
+	}
 	return database.C(collection)
 }

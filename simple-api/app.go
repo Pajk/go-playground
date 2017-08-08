@@ -10,7 +10,9 @@ import (
 )
 
 func main() {
-	utils.Init(config.App.MongoURL, config.App.MongoDB)
+	if config.App.MongoURL != "" && config.App.MongoDB != "" {
+		utils.InitDB(config.App.MongoURL, config.App.MongoDB)
+	}
 
 	r := gin.Default()
 

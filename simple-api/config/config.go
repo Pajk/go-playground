@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/namsral/flag"
 )
@@ -12,14 +11,12 @@ func makeConfig() IAppConfig {
 
 	flag.StringVar(&port, "PORT", "8000", "port number")
 	flag.StringVar(&mongoURL, "MONGO_URL", "", "MongoDB connection string")
-	flag.StringVar(&mongoURL, "MONGO_DB", "simple-api-db", "MongoDB database name")
+	flag.StringVar(&mongoDB, "MONGO_DB", "simple-api-db", "MongoDB database name")
 
 	flag.Parse()
 
 	if mongoURL == "" {
-		fmt.Println("MONGO_URL env variable is required")
-		flag.Usage()
-		os.Exit(1)
+		fmt.Println("[!] Missing MONGO_URL env variable, database won't be accessible.")
 	}
 
 	return IAppConfig{
