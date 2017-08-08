@@ -15,7 +15,6 @@ type DataRequest struct {
 // Data handles requests to /data route
 func Data(c *gin.Context) {
 	var req DataRequest
-	// var err error
 
 	if c.BindJSON(&req) != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{

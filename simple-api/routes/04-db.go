@@ -10,24 +10,52 @@ import (
 	"github.com/pajk/go-playground/simple-api/utils"
 )
 
-// TequestData Incomming request
-type RequestData struct {
-	Title   string `json:"title" binding:"required"`
-	BrandID int64  `json:"brand_id" binding:"required"`
-}
-
 // Listing data from DB
 type Listing struct {
-	ID      string `json:"id" bson:"_id"`
-	Title   string `json:"title"`
-	BrandID int64  `json:"brand_id"`
+	ID      bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	Title   string        `json:"title" bson:"title" binding:"required"`
+	BrandID int64         `json:"brand_id" bson:"brand_id" binding:"required"`
 }
 
-// PostDataDB handles requests to /data-db route
-func PostDataDB(c *gin.Context) {
-	var req RequestData
+// GetListing returns a listing from the database
+func GetListing(c *gin.Context) {
+	id := c.Param("id")
+	fmt.Printf("%s", id)
+	collection := utils.Collection("listings")
+	var result Listing
 
-	if c.BindJSON(&req) != nil {
+	err := collection.FindId(bson.ObjectIdHex(id)).One(&result)
+
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
+}
+
+// GetListings returns all listings from the database
+func GetListings(c *gin.Context) {
+	collection := utils.Collection("listings")
+	var result []Listing
+
+	err := collection.Find(nil).All(&result)
+
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
+}
+
+// CreateListing perists a new listing in the database
+func CreateListing(c *gin.Context) {
+	var listing Listing
+
+	if c.BindJSON(&listing) != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid data",
 		})
@@ -36,7 +64,9 @@ func PostDataDB(c *gin.Context) {
 
 	db := utils.Collection("listings")
 
-	err := db.Insert(req)
+	listing.ID = bson.NewObjectId()
+
+	err := db.Insert(listing)
 
 	if err != nil {
 		fmt.Println(err)
@@ -46,18 +76,5 @@ func PostDataDB(c *gin.Context) {
 		return
 	}
 
-	fromDB := Listing{}
-
-	err = db.Find(bson.M{"title": req.Title}).One(&fromDB)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": "Unable to fetch from database",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": fromDB,
-	})
+	c.JSON(http.StatusOK, listing)
 }

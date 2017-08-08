@@ -10,30 +10,30 @@ VS Code works great with Go, just make sure you have the [Go extension](https://
 
 ### Explore
 
-http://godoc.org
-https://github.com/golang/go/wiki/Projects
+- [Documentation Index](http://godoc.org)
+- [Projects by category](https://github.com/golang/go/wiki/Projects)
+- [Online Playground](https://play.golang.org)
 
+### Data allocation
 
-### Linters
-go get github.com/golang/lint/golint
-
+- [Effective go](https://golang.org/doc/effective_go.html#data)
+- Use `make` for slices, maps, and channels. It initialize the memory.
+- Use `new` or composite literals for everything else. It zeores the memory.
 
 ### Routers
 
-https://golang.org/pkg/net/http/ (https://golang.org/doc/articles/wiki/)
-http://www.gorillatoolkit.org
-https://github.com/gin-gonic/gin
-
+- [net/http](https://golang.org/pkg/net/http/) ([wiki](https://golang.org/doc/articles/wiki/))
+- [gorilla/mux](http://www.gorillatoolkit.org)
+- [gin-gonic/gin](https://github.com/gin-gonic/gin)
 
 ### Live reload
 
-https://github.com/gin-gonic/gin
+- [codegangsta/gin](https://github.com/codegangsta/gin)
 
 ### SQL
 
-https://golang.org/pkg/database/sql/
-https://github.com/golang/go/wiki/SQLInterface
+- [database/sql](https://golang.org/pkg/database/sql/) ([wiki](https://github.com/golang/go/wiki/SQLInterface))
 
 ### Mongo
 
-https://labix.org/mgo
+- [mgo driver](https://labix.org/mgo)

@@ -20,13 +20,21 @@ Content-Type: application/json
 
 ### Valid DB data request
 
-POST http://localhost:8000/data-db
+POST http://localhost:8000/listings
 Content-Type: application/json
 
 {
     "title": "Yee",
     "brand_id": 3
 }
+
+### Get all listings
+
+GET http://localhost:8000/listings
+
+### Get one listing
+
+GET http://localhost:8000/listings/598a4701ae3546fc2b39bf3b
 
 ### Goroutines request
 

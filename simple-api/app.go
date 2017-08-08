@@ -17,8 +17,11 @@ func main() {
 	r.GET("/say/:something", routes.Say)
 	r.GET("/", routes.Hello)
 	r.POST("/data", routes.Data)
-	r.POST("/data-db", routes.PostDataDB)
 	r.GET("/goroutines", routes.Goroutines)
+
+	r.POST("/listings", routes.CreateListing)
+	r.GET("/listings/:id", routes.GetListing)
+	r.GET("/listings", routes.GetListings)
 
 	fmt.Printf("Server starting on :%s\n", config.App.Port)
 
