@@ -1,0 +1,19 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: go-playground/simple-api
+    depends_on:
+      - db
+    environment:
+      MONGO_URL: db:27017
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/go/src/github.com/pajk/go-playground/simple-api
+  db:
+    image: mongo:3.4
+    ports:
+      - 27017:27017

@@ -1,0 +1,34 @@
+
+### Invalid data request
+
+POST http://localhost:8000/data
+Content-Type: application/json
+
+{
+    "valid": false
+}
+
+### Valid data request
+
+POST http://localhost:8000/data
+Content-Type: application/json
+
+{
+    "title": "Yeezy",
+    "brand_id": 3
+}
+
+### Valid DB data request
+
+POST http://localhost:8000/data-db
+Content-Type: application/json
+
+{
+    "title": "Yee",
+    "brand_id": 3
+}
+
+### Goroutines request
+
+GET http://localhost:8000/goroutines
+Content-Type: application/json
